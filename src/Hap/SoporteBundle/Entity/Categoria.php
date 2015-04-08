@@ -3,12 +3,15 @@
 namespace Hap\SoporteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Categoria
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("nombreCategoria",message="Ya se encuentra ese registro en el sistema")
  */
 class Categoria
 {
@@ -25,6 +28,7 @@ class Categoria
      * @var string
      *
      * @ORM\Column(name="nombre_categoria", type="string", length=150)
+     * @Assert\NotBlank()
      */
     private $nombreCategoria;
 

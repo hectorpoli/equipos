@@ -5,9 +5,13 @@
 {% block body %}
     <form action="{{ path('_nueva_categoria') }}" method="POST" id="nueva_categoria_form">
         {{ form_errors(form) }}
-
-        {{ form_row(form.nombreCategoria) }}
-
+        
+        <div>
+            {{ form_label(form.nombreCategoria) }}
+            {{ form_errors(form.nombreCategoria) }}
+            {{ form_widget(form.nombreCategoria) }}
+        </div>
+        
         {{ form_rest(form) }}
         <input type="submit" value="Guardar" class="symfony-button-grey" />
     </form>

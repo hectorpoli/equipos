@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use Hap\SoporteBundle\Form\CategoriaType;
+use Hap\SoporteBundle\Entity\Categoria;
 
 class InventarioController extends Controller
 {
@@ -16,11 +17,17 @@ class InventarioController extends Controller
      */
     public function nuevaCategoriaAction(\Symfony\Component\HttpFoundation\Request $request)
     {
-        $form = $this->createForm(new CategoriaType());
+        $em = $this->getDoctrine()->getManager();
+        
+        $form = $this->createForm(new CategoriaType(),new Categoria());
         $form->handleRequest($request);
         
         if ($form->isValid()) {
+            $reg = $form->getData();
+            $em->persist($reg);
+            $em->flush();
             
+            return $this->redirectToRoute('_nueva_categoria');
         }
         return array('form' => $form->createView());
     }
