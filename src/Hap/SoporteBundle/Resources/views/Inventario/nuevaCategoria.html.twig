@@ -1,0 +1,14 @@
+{% extends "::base.html.twig" %}
+
+{% block title "Soporte - Formulario Categoria" %}
+
+{% block body %}
+    <form action="{{ path('_nueva_categoria') }}" method="POST" id="nueva_categoria_form">
+        {{ form_errors(form) }}
+
+        {{ form_row(form.nombreCategoria) }}
+
+        {{ form_rest(form) }}
+        <input type="submit" value="Guardar" class="symfony-button-grey" />
+    </form>
+{% endblock %}

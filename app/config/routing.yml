@@ -1,0 +1,7 @@
+hap_soporte:
+    resource: "@HapSoporteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
