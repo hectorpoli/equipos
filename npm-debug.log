@@ -1,0 +1,59 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'less' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.29
+4 verbose cache add [ 'less', null ]
+5 verbose cache add name=undefined spec="less" args=["less",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'less',
+6 verbose parsed url   path: 'less',
+6 verbose parsed url   href: 'less' }
+7 silly makeCacheDir cache dir uid, gid [ 0, 0 ]
+8 silly lockFile 0b439cf4-less less
+9 verbose lock less /root/.npm/0b439cf4-less.lock
+10 silly lockFile 0b439cf4-less less
+11 silly lockFile 0b439cf4-less less
+12 verbose addNamed [ 'less', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile e13833ab-less less@
+15 verbose lock less@ /root/.npm/e13833ab-less.lock
+16 silly addNameRange { name: 'less', range: '*', hasData: false }
+17 verbose url raw less
+18 verbose url resolving [ 'https://registry.npmjs.org/', './less' ]
+19 verbose url resolved https://registry.npmjs.org/less
+20 info trying registry request attempt 1 at 16:15:10
+21 http GET https://registry.npmjs.org/less
+22 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=socket hang up
+23 info trying registry request attempt 2 at 16:30:20
+24 http GET https://registry.npmjs.org/less
+25 info retry will retry, error on last attempt: Error: tunneling socket could not be established, cause=socket hang up
+26 info trying registry request attempt 3 at 16:46:20
+27 http GET https://registry.npmjs.org/less
+28 silly lockFile e13833ab-less less@
+29 silly lockFile e13833ab-less less@
+30 error network tunneling socket could not be established, cause=socket hang up
+30 error network This is most likely not a problem with npm itself
+30 error network and is related to network connectivity.
+30 error network In most cases you are behind a proxy or have bad network settings.
+30 error network
+30 error network If you are behind a proxy, please make sure that the
+30 error network 'proxy' config is set properly.  See: 'npm help config'
+31 error System Linux 3.2.0-4-686-pae
+32 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "less"
+33 error cwd /home/hpoli/paginas/www/sf_prueba/equipos/equipos
+34 error node -v v0.10.29
+35 error npm -v 1.4.14
+36 error code ECONNRESET
+37 verbose exit [ 1, true ]

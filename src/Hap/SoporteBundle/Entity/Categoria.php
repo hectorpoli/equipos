@@ -28,7 +28,7 @@ class Categoria
      * @var string
      *
      * @ORM\Column(name="nombre_categoria", type="string", length=150)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     private $nombreCategoria;
 
