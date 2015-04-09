@@ -29,6 +29,11 @@ class Categoria
      *
      * @ORM\Column(name="nombre_categoria", type="string", length=150)
      * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="El nombre de la categoria no puede contener números"
+     * )
      */
     private $nombreCategoria;
 
