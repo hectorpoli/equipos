@@ -33,7 +33,7 @@ class InventarioController extends Controller
     }
 
     /**
-     * @Route("/Categoria")
+     * @Route("/Categoria",name="_categoria")
      * @Template()
      */
     public function CategoriaAction()
