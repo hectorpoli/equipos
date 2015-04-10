@@ -12,26 +12,16 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <nav class="navbar navbar-default" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle"
-                        data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Inventario</a>
-                <a class="navbar-brand" href="#">Prestamo</a>
+        
+        <div class="navbar navbar-fixed-top navbar-default">
+            <div class="navbar-inner navbar-brand">
+                {{ knp_menu_render('HapSoporteBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'HapSoporteBundle:Menu:knp_menu.html.twig'}) }}
             </div>
+        </div>
             
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                {{ knp_menu_render('HapSoporteBundle:Builder:mainMenu', { 'style': 'navbar' }) }}
-            </div><!-- /.navbar-collapse -->
-        </nav>
-        {% block body %}{% endblock %}
+        <div class="content" style="margin-top: 150px;margin-left: 80px;">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
         
         <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
