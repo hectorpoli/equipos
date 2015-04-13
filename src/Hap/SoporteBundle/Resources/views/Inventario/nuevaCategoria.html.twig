@@ -12,16 +12,20 @@
 {% block title "Soporte - Formulario Categoria" %}
 
 {% block body %}
-    <form action="{{ path('_nueva_categoria') }}" method="POST" id="nueva_categoria_form">
+    
+    {% if st == 1 %}
+        <div style="width: 450px;" class="alert alert-success" role="alert">Categoria agregada correctamente</div>
+    {% endif %}
+    <form action="{{ path('_nueva_categoria') }}" method="POST" id="nueva_categoria_form" class="navbar-form">
         {{ form_errors(form) }}
         
         <div>
             {{ form_label(form.nombreCategoria) }}
             {{ form_errors(form.nombreCategoria) }}
-            {{ form_widget(form.nombreCategoria) }}
+            {{ form_widget(form.nombreCategoria, {'attr': {'class': 'form-control','placeholder': 'Nombre Categoria','aria-describedby': 'sizing-addon2'}}) }}
         </div>
         
         {{ form_rest(form) }}
-        <input type="submit" value="Guardar" class="symfony-button-grey" />
+        <input type="submit" value="Guardar" class="btn btn-default navbar-btn" />
     </form>
 {% endblock %}

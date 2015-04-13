@@ -22,14 +22,20 @@ class InventarioController extends Controller
         $form = $this->createForm(new CategoriaType(),new Categoria());
         $form->handleRequest($request);
         
+        $mensaje="";
+        
         if ($form->isValid()) {
             $reg = $form->getData();
             $em->persist($reg);
             $em->flush();
             
-            return $this->redirectToRoute('_nueva_categoria');
+            return $this->redirectToRoute('_nueva_categoria',array('st' => '1'));
         }
-        return array('form' => $form->createView());
+        
+        if ($request->query->get('st'))
+            return array('form' => $form->createView(),'st' => $request->query->get('st'));
+        else
+            return array('form' => $form->createView(),'st' => '-1');
     }
 
     /**

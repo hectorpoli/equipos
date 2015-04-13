@@ -1,7 +1,51 @@
 {% extends "::base.html.twig" %}
+{% use 'form_div_layout.html.twig' with form_label as base_form_label %}
 
-{% block title %}HapSoporteBundle:Inventario:Categoria{% endblock %}
+{% block form_label %}
+    {{ block('base_form_label') }}
+
+    {% if required %}
+        <span class="required" title="Este campo es requerido">*</span>
+    {% endif %}
+{% endblock %}
+
+{% block title "Soporte - Categoria" %}
 
 {% block body %}
-<h1>Welcome to the Inventario:Categoria page</h1>
+    
+    <div class="panel panel-default" style="width: 900px;">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Lista de Categorias</div>
+            <div class="panel-body">
+                <p>A continuación se muestran las categorias cargadas en el sistema</p>
+            </div>
+            
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align: center">Descripción</th>
+                        <th style="text-align: center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Impresora</td>
+                        <td>Editar</td>
+                    </tr>
+                    <tr>
+                        <td>Laptop</td>
+                        <td>Editar</td>
+                    </tr>
+                    <tr>
+                        <td>Servidor</td>
+                        <td>Editar</td>
+                    </tr>
+                    <tr>
+                        <td>Video Bean</td>
+                        <td>Editar</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+    
 {% endblock %}
