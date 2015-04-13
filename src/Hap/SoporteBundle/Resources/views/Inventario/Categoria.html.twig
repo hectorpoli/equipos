@@ -28,24 +28,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Impresora</td>
-                        <td>Editar</td>
+                    {% for categoria in pagination %}
+                    <tr {% if loop.index is odd %}class="color"{% endif %}>
+                        <td>{{ categoria.nombreCategoria }}</td>
+                        <td>{{ categoria.id }}</td>
                     </tr>
-                    <tr>
-                        <td>Laptop</td>
-                        <td>Editar</td>
-                    </tr>
-                    <tr>
-                        <td>Servidor</td>
-                        <td>Editar</td>
-                    </tr>
-                    <tr>
-                        <td>Video Bean</td>
-                        <td>Editar</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination, "", {}, { "prev_label": "Anterior", "next_label": "Siguiente", "first_label": "Inicio", "last_label": "Fin"}) }}
     </div>
     
 {% endblock %}

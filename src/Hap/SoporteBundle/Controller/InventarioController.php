@@ -42,11 +42,21 @@ class InventarioController extends Controller
      * @Route("/Categoria",name="_categoria")
      * @Template()
      */
-    public function CategoriaAction()
+    public function CategoriaAction(\Symfony\Component\HttpFoundation\Request $request)
     {
-        return array(
-                // ...
-            );    }
+        $em    = $this->get('doctrine.orm.entity_manager');
+        $dql   = "SELECT c FROM HapSoporteBundle:Categoria c";
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1)/*page number*/,
+            2/*limit per page*/
+        );
+        return array('pagination' => $pagination);
+        
+    }
 
     /**
      * @Route("/cargarProducto")
