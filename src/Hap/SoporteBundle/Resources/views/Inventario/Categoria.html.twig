@@ -13,6 +13,10 @@
 
 {% block body %}
     
+    {% if msg is defined %}
+        <div style="width: 450px;" class="alert alert-success" role="alert">{{ msg }}</div>
+    {% endif %}
+    
     <div class="panel panel-default" style="width: 900px;">
         <!-- Default panel contents -->
         <div class="panel-heading">Lista de Categorias</div>
@@ -31,15 +35,15 @@
                     {% for categoria in pagination %}
                     <tr {% if loop.index is odd %}class="color"{% endif %}>
                         <td>{{ categoria.nombreCategoria }}</td>
-                        <td>{{ categoria.id }}</td>
+                        <td><a href="editarCategoria/{{ categoria.id }}">Editar</a> </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             
     </div>
-    <div class="navigation">
-        {{ knp_pagination_render(pagination, "", {}, { "prev_label": "Anterior", "next_label": "Siguiente", "first_label": "Inicio", "last_label": "Fin"}) }}
+    <div>
+        {{ knp_pagination_render(pagination) }}
     </div>
     
 {% endblock %}

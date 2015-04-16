@@ -6,3 +6,8 @@ _inventario:
     resource: "@HapSoporteBundle/Controller/InventarioController.php"
     type:     annotation
     prefix:   /
+    
+_catg:
+    resource: "@HapSoporteBundle/Controller/CategoriaController.php"
+    type:     annotation
+    prefix:   /
