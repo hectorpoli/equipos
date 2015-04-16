@@ -1,7 +1,7 @@
 {% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} - {{ 'views.index.list'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}
+    Sistema de Administración de Soporte - Sección Categoria
 {% endblock %}
 
 {% block page %}
@@ -9,7 +9,7 @@
 <div class="row">
 
     <div class="span8">
-        <h1>{{ 'views.index.list'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+        <h1>{{ 'Categorias'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
     </div>
     <div class="span2">
         {% if form_errors(filterForm) %}
@@ -19,30 +19,8 @@
         {% endif %}
         &nbsp;
     </div>
-    <div class="span2">
-        <div class="filters-right">
-            <a class="btn dropdown-toggle" data-toggle="collapse" data-target="#filters">
-                {{ 'views.index.filters'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-                <span class="caret"></span>
-            </a>
-        </div>
-    </div>
-
-    <div class="span12">
-        <div id="filters" class="collapse">
-
-            <form class="well" action="{{ path('categoria') }}" method="get" {{ form_enctype(filterForm) }}>
-                {{ form_row(filterForm.id) }}
-                {{ form_row(filterForm.nombreCategoria) }}
-                {{ form_rest(filterForm) }}
-
-                <p>
-                    <button type="submit" name="filter_action" value="filter">{{ 'views.index.filter'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
-                    <button type="submit" name="filter_action" value="reset">{{ 'views.index.reset'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
-                </p>
-            </form>
-        </div>
-    </div>
+    
+    
 
     <div class="span12">
 
@@ -50,8 +28,8 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Nombrecategoria</th>
-            <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
+            <th>Nombre Categoria</th>
+            <th>{{ 'Acción'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -61,10 +39,10 @@
             <td>{{ entity.nombreCategoria }}</td>
             <td>
         <a class="btn btn-mini" href="{{ path('categoria_show', { 'id': entity.id }) }}">
-            {{ 'views.actions.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+            {{ 'Ver'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
         <a class="btn btn-mini" href="{{ path('categoria_edit', { 'id': entity.id }) }}">
-            {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+            {{ 'Editar'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>            </td>
         </tr>
     {% endfor %}
@@ -78,7 +56,7 @@
 
         <div class="span8">
     <a class="btn btn-primary likepaginator" href="{{ path('categoria_new') }}">
-            {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} Categoria
+            Nueva Categoria
         </a>
     </div>
     </div>
