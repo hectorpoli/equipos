@@ -1,32 +1,32 @@
 {% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} -  {{ 'views.edit.edit'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}
+{{ parent() }} -  {{ 'Editar Categoria '|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
 {% block page %}
 
-<h1>{{ 'views.edit.edit'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+<h1>{{ 'Editar Categoria '|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
 
 <form class="well" action="{{ path('categoria_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <input type="hidden" name="_method" value="PUT" />
     {{ form_widget(edit_form) }}
     <p>
-        <button type="submit" class="btn btn-success">{{ 'views.edit.editbutton'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        <button type="submit" class="btn btn-success">{{ 'Editar'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
     </p>
 </form>
 
 <div>
     <div class="float-left">
         <a class="btn" href="{{ path('categoria') }}">
-            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+            {{ 'Regresar a la lista'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
     </div>
     <div class="float-left">
         <form action="{{ path('categoria_delete', { 'id': entity.id }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'Borrar'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
         </form>
     </div>
 </div>
