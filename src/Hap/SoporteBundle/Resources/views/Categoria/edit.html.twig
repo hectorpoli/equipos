@@ -4,6 +4,10 @@
 {{ parent() }} -  {{ 'Editar Categoria '|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
+{% block menu %}
+    {% include 'HapSoporteBundle:Menu:menu.html.twig' %}
+{% endblock menu %}
+
 {% block page %}
 
 <h1>{{ 'Editar Categoria '|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>

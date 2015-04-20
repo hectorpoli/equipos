@@ -94,8 +94,9 @@ class CategoriaController extends Controller
         $pagerfanta = new Pagerfanta($adapter);
         $currentPage = $this->getRequest()->get('page', 1);
         $pagerfanta->setCurrentPage($currentPage);
+        $pagerfanta->setMaxPerPage(7);
         $entities = $pagerfanta->getCurrentPageResults();
-
+        
         // Paginator - route generator
         $me = $this;
         $routeGenerator = function($page) use ($me)
