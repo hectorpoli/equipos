@@ -17,7 +17,7 @@ class ProductoType extends AbstractType
         $builder
             ->add('nombreProducto','text',array('label' => 'Nombre Producto: ','attr' => array('style' => 'width:200px','placeholder'=> 'Nombre Producto','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
             ->add('modelo','text',array('label' => 'Modelo: ','attr' => array('style' => 'width:200px','placeholder'=> 'Modelo del Producto','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
-            ->add('fechaCarga')
+            ->add('fechaCarga','date', array('data' => new \DateTime()))
             ->add('categoria',null,array('attr' => array('style' => 'width:400px')))
         ;
     }
