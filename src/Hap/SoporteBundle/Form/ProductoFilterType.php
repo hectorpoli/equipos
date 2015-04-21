@@ -14,10 +14,10 @@ class ProductoFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', 'filter_number_range',array('label' => 'Id Producto: '))
-            ->add('nombreProducto', 'filter_text',array('label' => 'Nombre Producto: '))
-            ->add('modelo', 'filter_text',array('label' => 'Modelo: '))
-            ->add('fechaCarga', 'filter_date_range',array('label' => 'Fecha Carga: '))
+            ->add('id', 'filter_number_range')
+            ->add('nombreProducto', 'filter_text')
+            ->add('modelo', 'filter_text')
+            ->add('fechaCarga', 'filter_date_range')
         ;
 
         $listener = function(FormEvent $event)
