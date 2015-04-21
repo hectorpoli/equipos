@@ -5,6 +5,7 @@ namespace Hap\SoporteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Producto
@@ -39,6 +40,14 @@ class Producto
      * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     private $modelo;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     */
+    private $descripcion;
 
     /**
      * @var \DateTime
@@ -56,6 +65,19 @@ class Producto
      */
     protected $categoria;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Inventario", mappedBy="producto")
+     */
+    protected $inventario;
+    
+    public function __construct()
+    {
+        $this->inventario = new ArrayCollection();
+    }
+    
+    public function __toString() {
+        return $this->nombreProducto . '-' . $this->modelo;
+    }
 
     /**
      * Get id
@@ -157,5 +179,61 @@ class Producto
     public function getCategoria()
     {
         return $this->categoria;
+    }
+
+    /**
+     * Add inventario
+     *
+     * @param \Hap\SoporteBundle\Entity\Inventario $inventario
+     * @return Producto
+     */
+    public function addInventario(\Hap\SoporteBundle\Entity\Inventario $inventario)
+    {
+        $this->inventario[] = $inventario;
+
+        return $this;
+    }
+
+    /**
+     * Remove inventario
+     *
+     * @param \Hap\SoporteBundle\Entity\Inventario $inventario
+     */
+    public function removeInventario(\Hap\SoporteBundle\Entity\Inventario $inventario)
+    {
+        $this->inventario->removeElement($inventario);
+    }
+
+    /**
+     * Get inventario
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInventario()
+    {
+        return $this->inventario;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Producto
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }

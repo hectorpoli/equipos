@@ -3,12 +3,16 @@
 namespace Hap\SoporteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Producto
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("nombreProducto",message="Ya se encuentra ese registro en el sistema")
  */
 class Producto
 {
@@ -25,6 +29,7 @@ class Producto
      * @var string
      *
      * @ORM\Column(name="nombre_producto", type="string", length=150)
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     private $nombreProducto;
 
@@ -32,13 +37,23 @@ class Producto
      * @var string
      *
      * @ORM\Column(name="modelo", type="string", length=150)
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     private $modelo;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="text")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     */
+    private $descripcion;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_carga", type="date")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     private $fechaCarga;
 
@@ -46,9 +61,23 @@ class Producto
     /**
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="producto")
      * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
      */
     protected $categoria;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Inventario", mappedBy="producto")
+     */
+    protected $inventario;
+    
+    public function __construct()
+    {
+        $this->inventario = new ArrayCollection();
+    }
+    
+    public function __toString() {
+        return $this->nombreProducto;
+    }
 
     /**
      * Get id
@@ -127,5 +156,61 @@ class Producto
     public function getFechaCarga()
     {
         return $this->fechaCarga;
+    }
+
+    /**
+     * Set categoria
+     *
+     * @param \Hap\SoporteBundle\Entity\Categoria $categoria
+     * @return Producto
+     */
+    public function setCategoria(\Hap\SoporteBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Hap\SoporteBundle\Entity\Categoria 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Add inventario
+     *
+     * @param \Hap\SoporteBundle\Entity\Inventario $inventario
+     * @return Producto
+     */
+    public function addInventario(\Hap\SoporteBundle\Entity\Inventario $inventario)
+    {
+        $this->inventario[] = $inventario;
+
+        return $this;
+    }
+
+    /**
+     * Remove inventario
+     *
+     * @param \Hap\SoporteBundle\Entity\Inventario $inventario
+     */
+    public function removeInventario(\Hap\SoporteBundle\Entity\Inventario $inventario)
+    {
+        $this->inventario->removeElement($inventario);
+    }
+
+    /**
+     * Get inventario
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInventario()
+    {
+        return $this->inventario;
     }
 }
