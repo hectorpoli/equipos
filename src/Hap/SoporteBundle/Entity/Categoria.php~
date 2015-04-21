@@ -49,11 +49,7 @@ class Categoria
         $this->producto = new ArrayCollection();
     }
     
-    public function __toString() {
-        return $this->nombreCategoria;
-    }
 
-    
     /**
      * Get id
      *
@@ -85,38 +81,5 @@ class Categoria
     public function getNombreCategoria()
     {
         return $this->nombreCategoria;
-    }
-
-    /**
-     * Add producto
-     *
-     * @param \Hap\SoporteBundle\Entity\Producto $producto
-     * @return Categoria
-     */
-    public function addProducto(\Hap\SoporteBundle\Entity\Producto $producto)
-    {
-        $this->producto[] = $producto;
-
-        return $this;
-    }
-
-    /**
-     * Remove producto
-     *
-     * @param \Hap\SoporteBundle\Entity\Producto $producto
-     */
-    public function removeProducto(\Hap\SoporteBundle\Entity\Producto $producto)
-    {
-        $this->producto->removeElement($producto);
-    }
-
-    /**
-     * Get producto
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProducto()
-    {
-        return $this->producto;
     }
 }

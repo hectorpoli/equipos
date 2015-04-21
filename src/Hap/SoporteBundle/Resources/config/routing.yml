@@ -11,3 +11,8 @@ _catg:
     resource: "@HapSoporteBundle/Controller/CategoriaController.php"
     type:     annotation
     prefix:   /
+    
+_prd:
+    resource: "@HapSoporteBundle/Controller/ProductoController.php"
+    type:     annotation
+    prefix:   /
