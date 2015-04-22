@@ -15,6 +15,9 @@ use Hap\SoporteBundle\Entity\Categoria;
 use Hap\SoporteBundle\Form\CategoriaType;
 use Hap\SoporteBundle\Form\CategoriaFilterType;
 
+
+use FOS\UserBundle\Model\UserInterface;
+
 /**
  * Categoria controller.
  *
@@ -34,6 +37,13 @@ class CategoriaController extends Controller
         list($filterForm, $queryBuilder) = $this->filter();
 
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+        
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            echo "No logeado";
+        }else{
+            echo $user->getId();
+        }
 
         return array(
             'entities' => $entities,

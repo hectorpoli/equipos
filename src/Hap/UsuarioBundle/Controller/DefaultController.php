@@ -1,6 +1,6 @@
 <?php
 
-namespace Hap\SoporteBundle\Controller;
+namespace Hap\UsuarioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-        return $this->render('HapSoporteBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('HapUsuarioBundle:Default:index.html.twig', array('name' => $name));
     }
 }

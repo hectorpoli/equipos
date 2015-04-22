@@ -1,7 +1,8 @@
-hap_soporte_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: HapSoporteBundle:Default:index }
-    
+home:
+    resource: "@HapSoporteBundle/Controller/HomeController.php"
+    type:     annotation
+    prefix:   /
+
 _inventario:
     resource: "@HapSoporteBundle/Controller/InventarioController.php"
     type:     annotation
