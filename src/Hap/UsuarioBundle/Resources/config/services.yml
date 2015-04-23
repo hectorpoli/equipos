@@ -5,3 +5,7 @@ services:
 #    hap_usuario.example:
 #        class: %hap_usuario.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    hap_usuario.registration.form:
+        class: Hap\UsuarioBundle\Form\RegistrationFormType
+        tags:
+            - { name: form.type, alias: hap_usuario_registration }

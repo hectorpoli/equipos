@@ -5,6 +5,7 @@ security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
         FOS\UserBundle\Model\UserInterface: sha512
+        #AcmeBundle\Acme\User\LdapUser: plaintext
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
@@ -14,6 +15,11 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, fr3d_ldapbundle]
+        fr3d_ldapbundle:
+            id: fr3d_ldap.security.user.provider
         fos_userbundle:
             id: fos_user.user_provider.username
         in_memory:
@@ -32,10 +38,13 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 default_target_path: /home
+                always_use_default_target_path: true
             logout:
                 path: /logout
                 target: /home
             anonymous:    true
+            fr3d_ldap:  ~
+            anonymous:  true
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false

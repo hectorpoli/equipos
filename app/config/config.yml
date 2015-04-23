@@ -125,3 +125,31 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Hap\UsuarioBundle\Entity\User
+    group:
+        group_class: Hap\UsuarioBundle\Entity\Group
+    registration:
+        form:
+            type: hap_usuario_registration
+            
+fr3d_ldap:
+    driver:
+        host:                ldap.opsu.gob.ve
+#       port:                389    # Optional
+#       username:            foo    # Optional
+#       password:            bar    # Optional
+#       bindRequiresDn:      true   # Optional
+#       baseDn:              ou=users, dc=host, dc=foo   # Optional
+#       accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
+#       optReferrals:        false  # Optional
+#       useSsl:              true   # Enable SSL negotiation. Optional
+#       useStartTls:         true   # Enable TLS negotiation. Optional
+#       accountCanonicalForm: 3 # ACCTNAME_FORM_BACKSLASH this is only needed if your users have to login with something like HOST\User
+#       accountDomainName: HOST
+#       accountDomainNameShort: HOST # if you use the Backslash form set both to Hostname than the Username will be converted to HOST\User
+    user:
+        baseDn: dc=opsu,dc=gob,dc=ve,o=opsuldap
+        filter: (&(ObjectClass=Person))
+        attributes:
+            - { ldap_attr: uid,  user_method: setUsername }
+            - { ldap_attr: gecos,  user_method: setName }
+            - { ldap_attr: mail, user_method: setEmail }
