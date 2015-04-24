@@ -11,7 +11,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name',null,array('disabled' => true))
             ->add('roles', 'choice', array('label' => 'Rol', 'required' => true, 
                            'choices' => array( 'ROLE_ADMIN' => 'ADMINISTRADOR','ROLE_SUPERADMIN' => 'SUPERADMINISTRADOR', 
                                                'ROLE_USER' => 'USUARIO','ROLE_SOPORTE' => 'SOPORTE','ROLE_DESARROLLO' => 'DESARROLLO'), 'multiple' => true));
