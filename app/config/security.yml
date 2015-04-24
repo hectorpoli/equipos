@@ -11,7 +11,7 @@ security:
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         #ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPERADMIN: [ROLE_ADMIN,ROLE_SOPORTE,ROLE_DESARROLLO]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -77,3 +77,4 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/user/, role: ROLE_SUPERADMIN }

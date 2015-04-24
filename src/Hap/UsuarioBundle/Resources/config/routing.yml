@@ -1,3 +1,8 @@
 hap_usuario_homepage:
     path:     /hello/{name}
     defaults: { _controller: HapUsuarioBundle:Default:index }
+    
+_user:
+    resource: "@HapUsuarioBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /
