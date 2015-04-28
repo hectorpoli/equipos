@@ -86,6 +86,20 @@ class Producto
      */
     private $id_usuario_modificacion;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="serial", type="string", length=50)
+     */
+    private $serial;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer")
+     */
+    private $estado;
+    
     public function __construct()
     {
         $this->inventario = new ArrayCollection();
@@ -251,5 +265,75 @@ class Producto
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set id_usuario
+     *
+     * @param integer $idUsuario
+     * @return Producto
+     */
+    public function setIdUsuario($idUsuario)
+    {
+        $this->id_usuario = $idUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get id_usuario
+     *
+     * @return integer 
+     */
+    public function getIdUsuario()
+    {
+        return $this->id_usuario;
+    }
+
+    /**
+     * Set id_usuario_modificacion
+     *
+     * @param integer $idUsuarioModificacion
+     * @return Producto
+     */
+    public function setIdUsuarioModificacion($idUsuarioModificacion)
+    {
+        $this->id_usuario_modificacion = $idUsuarioModificacion;
+
+        return $this;
+    }
+
+    /**
+     * Get id_usuario_modificacion
+     *
+     * @return integer 
+     */
+    public function getIdUsuarioModificacion()
+    {
+        return $this->id_usuario_modificacion;
+    }
+
+    
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     * @return Producto
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

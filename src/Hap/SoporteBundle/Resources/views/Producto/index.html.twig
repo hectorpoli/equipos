@@ -52,6 +52,8 @@
             <th>Nombre Producto</th>
             <th>Modelo</th>
             <th>Categoria</th>
+            <th>Serial</th>
+            <th>Estado</th>
             <th>Fecha Carga</th>
             <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
         </tr>
@@ -63,6 +65,12 @@
             <td>{{ entity.nombreProducto }}</td>
             <td>{{ entity.modelo }}</td>
             <td>{{ entity.categoria }}</td>
+            <td>{{ entity.serial }}</td>
+            {% if entity.estado == 1 %} 
+                <td style="color: green;">Funcional</td> 
+            {% else %} 
+                <td style="color: red;">Dañada</td> 
+            {% endif %}
             <td>{% if entity.fechaCarga %}{{ entity.fechaCarga|date('d-m-Y') }}{% endif %}</td>
             <td>
         <a class="btn btn-mini" href="{{ path('producto_show', { 'id': entity.id }) }}">

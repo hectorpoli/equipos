@@ -19,6 +19,8 @@ class ProductoType extends AbstractType
             ->add('modelo','text',array('label' => 'Modelo: ','attr' => array('style' => 'width:200px','placeholder'=> 'Modelo del Producto','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
             ->add('categoria',null,array('attr' => array('style' => 'width:400px')))
             ->add('descripcion',null,array('attr' => array('style' => 'width:400px','label' => 'Descripción')))
+            ->add('serial','text',array('label' => 'Serial: ','attr' => array('style' => 'width:200px','placeholder'=> 'Serial del Producto','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
+            ->add('estado','choice',array('label' => 'Estado equipos: ','choices'  => array('1' => 'Funcional', '2' => 'Dañada'),'attr' => array('style' => 'width:200px','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
             ->add('fechaCarga','date', array('data' => new \DateTime()))
             
         ;
