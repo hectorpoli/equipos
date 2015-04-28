@@ -44,6 +44,21 @@ class Inventario
      */
     protected $producto;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario", type="integer")
+     * 
+     */
+    private $id_usuario;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario_modificacion", type="integer")
+     * 
+     */
+    private $id_usuario_modificacion;
 
     /**
      * Get id

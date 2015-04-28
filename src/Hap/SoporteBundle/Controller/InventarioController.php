@@ -130,6 +130,9 @@ class InventarioController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $entity->setIdUsuario($user->getId());
+            $entity->setIdUsuarioModificacion(0);
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
@@ -235,6 +238,8 @@ class InventarioController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $entity->setIdUsuarioModificacion($user->getId());
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');

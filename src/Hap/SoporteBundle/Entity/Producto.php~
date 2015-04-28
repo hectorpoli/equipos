@@ -70,13 +70,29 @@ class Producto
      */
     protected $inventario;
     
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario", type="integer")
+     * 
+     */
+    private $id_usuario;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario_modificacion", type="integer")
+     * 
+     */
+    private $id_usuario_modificacion;
+    
     public function __construct()
     {
         $this->inventario = new ArrayCollection();
     }
     
     public function __toString() {
-        return $this->nombreProducto;
+        return $this->nombreProducto . '-' . $this->modelo;
     }
 
     /**
@@ -212,5 +228,28 @@ class Producto
     public function getInventario()
     {
         return $this->inventario;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Producto
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }

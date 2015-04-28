@@ -70,6 +70,22 @@ class Producto
      */
     protected $inventario;
     
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario", type="integer")
+     * 
+     */
+    private $id_usuario;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_usuario_modificacion", type="integer")
+     * 
+     */
+    private $id_usuario_modificacion;
+    
     public function __construct()
     {
         $this->inventario = new ArrayCollection();
@@ -235,5 +251,51 @@ class Producto
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set id_usuario
+     *
+     * @param integer $idUsuario
+     * @return Producto
+     */
+    public function setIdUsuario($idUsuario)
+    {
+        $this->id_usuario = $idUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get id_usuario
+     *
+     * @return integer 
+     */
+    public function getIdUsuario()
+    {
+        return $this->id_usuario;
+    }
+
+    /**
+     * Set id_usuario_modificacion
+     *
+     * @param integer $idUsuarioModificacion
+     * @return Producto
+     */
+    public function setIdUsuarioModificacion($idUsuarioModificacion)
+    {
+        $this->id_usuario_modificacion = $idUsuarioModificacion;
+
+        return $this;
+    }
+
+    /**
+     * Get id_usuario_modificacion
+     *
+     * @return integer 
+     */
+    public function getIdUsuarioModificacion()
+    {
+        return $this->id_usuario_modificacion;
     }
 }

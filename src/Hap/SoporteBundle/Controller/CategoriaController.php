@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
@@ -25,6 +27,15 @@ use FOS\UserBundle\Model\UserInterface;
  */
 class CategoriaController extends Controller
 {
+    
+    private function enforceUserSecurity()
+    {
+        $securityContext = $this->container->get('security.context');
+        if (!$securityContext->isGranted('ROLE_SOPORTE')) {
+            throw new AccessDeniedException('Need ROLE_SOPORTE!');
+        }
+    }
+
     /**
      * Lists all Categoria entities.
      *
@@ -34,16 +45,19 @@ class CategoriaController extends Controller
      */
     public function indexAction()
     {
+        $this->enforceUserSecurity();
+        
         list($filterForm, $queryBuilder) = $this->filter();
 
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
         
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        /*$user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             echo "No logeado";
         }else{
             echo $user->getId();
-        }
+        }*/
 
         return array(
             'entities' => $entities,
@@ -138,9 +152,12 @@ class CategoriaController extends Controller
         $entity  = new Categoria();
         $form = $this->createForm(new CategoriaType(), $entity);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $entity->setIdUsuario($user->getId());
+            $entity->setIdUsuarioModificacion(0);
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
@@ -246,6 +263,8 @@ class CategoriaController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $user = $this->container->get('security.context')->getToken()->getUser();
+            $entity->setIdUsuarioModificacion($user->getId());
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
