@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\Validator\Constraints as Assert;
 use FR3D\LdapBundle\Model\LdapUserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -54,6 +55,11 @@ class User extends BaseUser implements LdapUserInterface
      */
     private $dn;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Hap\SoporteBundle\Entity\Solicitud", mappedBy="usuarioSolicito")
+     */
+    protected $solicitud;
+    
     
     /**
      * Constructor
@@ -67,7 +73,12 @@ class User extends BaseUser implements LdapUserInterface
         }
         if(empty($this->dn))
             $this->dn = ';';
-        
+        $this->solicitud = new ArrayCollection();
+    }
+    
+    public function __toString() {
+        parent::__toString();
+        return $this->getUsername();
     }
 
     /**
@@ -118,6 +129,39 @@ class User extends BaseUser implements LdapUserInterface
     public function getDn()
     {
         return $this->dn;
+    }
+
+    /**
+     * Add solicitud
+     *
+     * @param \Hap\SoporteBundle\Entity\Solicitud $solicitud
+     * @return User
+     */
+    public function addSolicitud(\Hap\SoporteBundle\Entity\Solicitud $solicitud)
+    {
+        $this->solicitud[] = $solicitud;
+
+        return $this;
+    }
+
+    /**
+     * Remove solicitud
+     *
+     * @param \Hap\SoporteBundle\Entity\Solicitud $solicitud
+     */
+    public function removeSolicitud(\Hap\SoporteBundle\Entity\Solicitud $solicitud)
+    {
+        $this->solicitud->removeElement($solicitud);
+    }
+
+    /**
+     * Get solicitud
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSolicitud()
+    {
+        return $this->solicitud;
     }
 
     

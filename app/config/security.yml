@@ -79,3 +79,4 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/user/, role: ROLE_SUPERADMIN }
         - { path: ^/categoria/, role: ROLE_SOPORTE }
+        - { path: ^/solicitud/, role: [ROLE_SOPORTE,ROLE_USER] }

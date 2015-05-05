@@ -10,23 +10,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
-use Symfony\Component\HttpFoundation\Response;
 
-use Hap\SoporteBundle\Entity\Producto;
-use Hap\SoporteBundle\Form\ProductoType;
-use Hap\SoporteBundle\Form\ProductoFilterType;
+use Hap\SoporteBundle\Entity\Solicitud;
+use Hap\SoporteBundle\Form\SolicitudType;
+use Hap\SoporteBundle\Form\SolicitudFilterType;
 
 /**
- * Producto controller.
+ * Solicitud controller.
  *
- * @Route("/producto")
+ * @Route("/solicitud")
  */
-class ProductoController extends Controller
+class SolicitudController extends Controller
 {
     /**
-     * Lists all Producto entities.
+     * Lists all Solicitud entities.
      *
-     * @Route("/", name="producto")
+     * @Route("/", name="solicitud")
      * @Method("GET")
      * @Template()
      */
@@ -51,13 +50,13 @@ class ProductoController extends Controller
     {
         $request = $this->getRequest();
         $session = $request->getSession();
-        $filterForm = $this->createForm(new ProductoFilterType());
+        $filterForm = $this->createForm(new SolicitudFilterType());
         $em = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('HapSoporteBundle:Producto')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository('HapSoporteBundle:Solicitud')->createQueryBuilder('e');
 
         // Reset filter
         if ($request->get('filter_action') == 'reset') {
-            $session->remove('ProductoControllerFilter');
+            $session->remove('SolicitudControllerFilter');
         }
 
         // Filter action
@@ -70,13 +69,13 @@ class ProductoController extends Controller
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
                 // Save filter to session
                 $filterData = $filterForm->getData();
-                $session->set('ProductoControllerFilter', $filterData);
+                $session->set('SolicitudControllerFilter', $filterData);
             }
         } else {
             // Get filter from session
-            if ($session->has('ProductoControllerFilter')) {
-                $filterData = $session->get('ProductoControllerFilter');
-                $filterForm = $this->createForm(new ProductoFilterType(), $filterData);
+            if ($session->has('SolicitudControllerFilter')) {
+                $filterData = $session->get('SolicitudControllerFilter');
+                $filterForm = $this->createForm(new SolicitudFilterType(), $filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
         }
@@ -101,7 +100,7 @@ class ProductoController extends Controller
         $me = $this;
         $routeGenerator = function($page) use ($me)
         {
-            return $me->generateUrl('producto', array('page' => $page));
+            return $me->generateUrl('solicitud', array('page' => $page));
         };
 
         // Paginator - view
@@ -117,28 +116,31 @@ class ProductoController extends Controller
     }
 
     /**
-     * Creates a new Producto entity.
+     * Creates a new Solicitud entity.
      *
-     * @Route("/", name="producto_create")
+     * @Route("/", name="solicitud_create")
      * @Method("POST")
-     * @Template("HapSoporteBundle:Producto:new.html.twig")
+     * @Template("HapSoporteBundle:Solicitud:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Producto();
-        $form = $this->createForm(new ProductoType(), $entity);
+        $entity  = new Solicitud();
+        $form = $this->createForm(new SolicitudType(), $entity);
         $form->bind($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
             $user = $this->container->get('security.context')->getToken()->getUser();
-            $entity->setIdUsuario($user->getId());
-            $entity->setIdUsuarioModificacion(0);
+            $entity->setIdUsuarioSolicito($user->getId());
+            $entity->setEstatus(1);
+            $entity->setFechaSolicitud(new \DateTime('now'));
+            $entity->setIdTecnico(0);
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
-            return $this->redirect($this->generateUrl('producto_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -148,16 +150,16 @@ class ProductoController extends Controller
     }
 
     /**
-     * Displays a form to create a new Producto entity.
+     * Displays a form to create a new Solicitud entity.
      *
-     * @Route("/new", name="producto_new")
+     * @Route("/new", name="solicitud_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Producto();
-        $form   = $this->createForm(new ProductoType(), $entity);
+        $entity = new Solicitud();
+        $form   = $this->createForm(new SolicitudType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -166,9 +168,9 @@ class ProductoController extends Controller
     }
 
     /**
-     * Finds and displays a Producto entity.
+     * Finds and displays a Solicitud entity.
      *
-     * @Route("/ver/{id}", name="producto_show")
+     * @Route("/{id}", name="solicitud_show")
      * @Method("GET")
      * @Template()
      */
@@ -176,10 +178,10 @@ class ProductoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HapSoporteBundle:Producto')->find($id);
+        $entity = $em->getRepository('HapSoporteBundle:Solicitud')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Producto solicitado no se encuentra en los registros.');
+            throw $this->createNotFoundException('Unable to find Solicitud entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -191,9 +193,9 @@ class ProductoController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Producto entity.
+     * Displays a form to edit an existing Solicitud entity.
      *
-     * @Route("/{id}/edit", name="producto_edit")
+     * @Route("/{id}/edit", name="solicitud_edit")
      * @Method("GET")
      * @Template()
      */
@@ -201,13 +203,13 @@ class ProductoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HapSoporteBundle:Producto')->find($id);
+        $entity = $em->getRepository('HapSoporteBundle:Solicitud')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Producto solicitado no se encuentra en los registros.');
+            throw $this->createNotFoundException('Unable to find Solicitud entity.');
         }
 
-        $editForm = $this->createForm(new ProductoType(), $entity);
+        $editForm = $this->createForm(new SolicitudType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -218,34 +220,33 @@ class ProductoController extends Controller
     }
 
     /**
-     * Edits an existing Producto entity.
+     * Edits an existing Solicitud entity.
      *
-     * @Route("/{id}", name="producto_update")
+     * @Route("/{id}", name="solicitud_update")
      * @Method("PUT")
-     * @Template("HapSoporteBundle:Producto:edit.html.twig")
+     * @Template("HapSoporteBundle:Solicitud:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('HapSoporteBundle:Producto')->find($id);
+        $entity = $em->getRepository('HapSoporteBundle:Solicitud')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Producto entity.');
+            throw $this->createNotFoundException('Unable to find Solicitud entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new ProductoType(), $entity);
+        $editForm = $this->createForm(new SolicitudType(), $entity);
         $editForm->bind($request);
 
+        
         if ($editForm->isValid()) {
-            $user = $this->container->get('security.context')->getToken()->getUser();
-            $entity->setIdUsuarioModificacion($user->getId());
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            return $this->redirect($this->generateUrl('producto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
         } else {
             $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
         }
@@ -258,9 +259,9 @@ class ProductoController extends Controller
     }
 
     /**
-     * Deletes a Producto entity.
+     * Deletes a Solicitud entity.
      *
-     * @Route("/{id}", name="producto_delete")
+     * @Route("/{id}", name="solicitud_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -270,10 +271,10 @@ class ProductoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('HapSoporteBundle:Producto')->find($id);
+            $entity = $em->getRepository('HapSoporteBundle:Solicitud')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Producto entity.');
+                throw $this->createNotFoundException('Unable to find Solicitud entity.');
             }
 
             $em->remove($entity);
@@ -283,11 +284,11 @@ class ProductoController extends Controller
             $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
         }
 
-        return $this->redirect($this->generateUrl('producto'));
+        return $this->redirect($this->generateUrl('solicitud'));
     }
 
     /**
-     * Creates a form to delete a Producto entity by id.
+     * Creates a form to delete a Solicitud entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -299,40 +300,5 @@ class ProductoController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
-    }
-    
-    /**
-     * 
-     *
-     * @Route("/getnproductos", name="producto_getn")
-     * @Method("POST")
-     * 
-     */
-    public function getNProductosAction()
-    {
-        $request = $this->get('request');
-        $nombre=$request->request->get('nombre');
-        
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-                'Select count(p.nombreProducto) '
-                . 'from HapSoporteBundle:Producto p '
-                . ' where p.estatus=2 and p.estado=1 and '
-                . ' p.categoria = :nombre'
-                //. 'group by p.nombreProducto '
-                )->setParameter('nombre',$nombre);
-        
-        $productos = $query->getResult();
-        $combo = '<option value="-1">Seleccione la cantidad</option>';
-        if(count($productos)> 0){
-            for($i=1; $i <= $productos[0][1]; $i++)
-                $combo .= '<option value='.$i.'>'.$i.'</option>';
-            $return=array("responseCode"=>200,  "datos"=>$combo);
-        }else{
-            $return=array("responseCode"=>400, "datos"=>$combo);
-        }
-        $return=json_encode($return);//jscon encode the array
-        return new Response($return,200,array('Content-Type'=>'application/json'));
-        
     }
 }

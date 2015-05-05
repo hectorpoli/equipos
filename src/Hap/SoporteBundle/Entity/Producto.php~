@@ -11,8 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Producto
  *
  * @ORM\Table()
- * @ORM\Entity
- * @UniqueEntity("nombreProducto",message="Ya se encuentra ese registro en el sistema")
+ * @ORM\Entity(repositoryClass="Hap\SoporteBundle\Entity\ProductoRepository")
+ * 
  */
 class Producto
 {
@@ -94,15 +94,41 @@ class Producto
     private $serial;
     
     /**
+     * Indica como esta la maquina
+     * 1 = Funcional
+     * 2 = Dañada
      * @var integer
      *
      * @ORM\Column(name="estado", type="integer")
      */
     private $estado;
     
+    /**
+     * Sirve para identificar si esta disponible o no
+     * 1 = No disponible
+     * 2 = Disponible
+     * @var integer
+     *
+     * @ORM\Column(name="estatus", type="integer")
+     */
+    private $estatus;
+    
+    /**
+     * Indica si el producto esta habilitado para prestamo o no
+     * @var boolean
+     *
+     * @ORM\Column(name="habilitado", type="boolean")
+     */
+    private $habilitado;
+    
+    
+    
     public function __construct()
     {
         $this->inventario = new ArrayCollection();
+        $this->estatus = 2;
+        $this->estado=1;
+        $this->habilitado=1;
     }
     
     public function __toString() {
@@ -335,5 +361,75 @@ class Producto
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set serial
+     *
+     * @param string $serial
+     * @return Producto
+     */
+    public function setSerial($serial)
+    {
+        $this->serial = $serial;
+
+        return $this;
+    }
+
+    /**
+     * Get serial
+     *
+     * @return string 
+     */
+    public function getSerial()
+    {
+        return $this->serial;
+    }
+
+
+    /**
+     * Set estatus
+     *
+     * @param integer $estatus
+     * @return Producto
+     */
+    public function setEstatus($estatus)
+    {
+        $this->estatus = $estatus;
+
+        return $this;
+    }
+
+    /**
+     * Get estatus
+     *
+     * @return integer 
+     */
+    public function getEstatus()
+    {
+        return $this->estatus;
+    }
+
+    /**
+     * Set habilitado
+     *
+     * @param boolean $habilitado
+     * @return Producto
+     */
+    public function setHabilitado($habilitado)
+    {
+        $this->habilitado = $habilitado;
+
+        return $this;
+    }
+
+    /**
+     * Get habilitado
+     *
+     * @return boolean 
+     */
+    public function getHabilitado()
+    {
+        return $this->habilitado;
     }
 }

@@ -17,3 +17,8 @@ _prd:
     resource: "@HapSoporteBundle/Controller/ProductoController.php"
     type:     annotation
     prefix:   /
+    
+_solicitud:
+    resource: "@HapSoporteBundle/Controller/SolicitudController.php"
+    type:     annotation
+    prefix:   /

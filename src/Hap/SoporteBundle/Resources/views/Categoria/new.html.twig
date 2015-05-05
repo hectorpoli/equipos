@@ -12,7 +12,7 @@
 
 <h1>{{ 'views.new.creation'|trans({'%entity%': 'Categoria'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
 
-<form class="well" action="{{ path('categoria_create') }}" method="post" {{ form_enctype(form) }}>
+<form class="well" action="{{ path('categoria_create') }}" method="post" {{ form_enctype(form) }} style="width: 700px;">
     {{ form_widget(form) }}
     <p>
         <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>

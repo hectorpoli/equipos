@@ -1,0 +1,61 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.show.show'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block page %}
+
+<h1>Solicitud</h1>
+
+<form class="form-horizontal">
+    <fieldset>        <div class="control-group">
+            <label class="control-label">Id</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Cantidad</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.cantidad }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Fechainicio</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.fechaInicio|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Fechaentrega</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.fechaEntrega|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Fechasolicitud</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.fechaSolicitud|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Comentario</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.comentario }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Estatus</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.estatus }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Destino</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.destino }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Idtecnico</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.idTecnico }}</span>            </div>
+        </div>    </fieldset>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('solicitud') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <a class="btn btn-primary" href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
+            {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -59,10 +59,16 @@ class Categoria
      * @ORM\OneToMany(targetEntity="Producto", mappedBy="categoria")
      */
     protected $producto;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Solicitud", mappedBy="categoria")
+     */
+    protected $solicitud;
 
     public function __construct()
     {
         $this->producto = new ArrayCollection();
+        $this->solicitud = new ArrayCollection();
     }
     
     public function __toString() {
@@ -180,5 +186,38 @@ class Categoria
     public function getIdUsuarioModificacion()
     {
         return $this->id_usuario_modificacion;
+    }
+
+    /**
+     * Add solicitud
+     *
+     * @param \Hap\SoporteBundle\Entity\Solicitud $solicitud
+     * @return Categoria
+     */
+    public function addSolicitud(\Hap\SoporteBundle\Entity\Solicitud $solicitud)
+    {
+        $this->solicitud[] = $solicitud;
+
+        return $this;
+    }
+
+    /**
+     * Remove solicitud
+     *
+     * @param \Hap\SoporteBundle\Entity\Solicitud $solicitud
+     */
+    public function removeSolicitud(\Hap\SoporteBundle\Entity\Solicitud $solicitud)
+    {
+        $this->solicitud->removeElement($solicitud);
+    }
+
+    /**
+     * Get solicitud
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSolicitud()
+    {
+        return $this->solicitud;
     }
 }

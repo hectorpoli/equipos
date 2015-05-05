@@ -1,0 +1,71 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block menu %}
+    {% include 'HapSoporteBundle:Menu:menu.html.twig' %}
+{% endblock menu %}
+
+
+
+{% block page %}
+    
+    
+
+<h1>{{ 'Nueva Solicitud'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+
+<form class="well" action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }} style="width: 700px;">
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+    </p>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('solicitud') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+</div>
+            
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+           $( "#hap_soportebundle_solicitud_categoria" )
+            .change(function () {
+              var str = "";
+              $( "#hap_soportebundle_solicitud_categoria option:selected" ).each(function() {
+                str += $( this ).text() + " ";
+                cambiar($( this ).val());
+              });
+              //alert(str);
+            })
+            .change();
+    
+            function cambiar(str){
+                //var a = str.split("-");
+                var url = "{{ path('producto_getn') }}";
+                
+                $.post(url,{
+                        nombre: str//a[0]
+                    },function(data){
+                        if(data.responseCode==200 ||     data.responseCode==400 ){
+                            //$('#dina').html(data.datos);
+                            $('#hap_soportebundle_solicitud_cantidad').html(data.datos);
+                        }else{
+                            alert('Ha ocurrido un error');
+                        }
+                    }
+
+                );
+            }
+            
+        });
+    </script>
+{% endblock %}

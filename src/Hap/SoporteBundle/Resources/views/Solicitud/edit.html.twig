@@ -1,0 +1,97 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} -  {{ 'views.edit.edit'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block menu %}
+    {% include 'HapSoporteBundle:Menu:menu.html.twig' %}
+{% endblock menu %}
+
+{% block page %}
+
+<h1>{{ 'views.edit.edit'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+
+<form class="well" action="{{ path('solicitud_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <input type="hidden" name="_method" value="PUT" />
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit" class="btn btn-success">{{ 'views.edit.editbutton'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+    </p>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('solicitud') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var $categoria = $('#hap_soportebundle_solicitud_categoria');
+            // When sport gets selected ...
+            $categoria.change(function() {
+              // ... retrieve the corresponding form.
+              var $form = $(this).closest('form');
+              // Simulate form data, but only include the selected sport value.
+              var data = {};
+              data[$categoria.attr('name')] = $categoria.val();
+              // Submit data via AJAX to the form's action path.
+              $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                  // Replace current position field ...
+                  $('#hap_soportebundle_solicitud_cantidad').replaceWith(
+                    // ... with the returned one from the AJAX response.
+                    $(html).find('#hap_soportebundle_solicitud_cantidad')
+                  );
+                  // Position field now displays the appropriate positions.
+                }
+              });
+            });
+           /*
+           $( "#hap_soportebundle_solicitud_categoria" )
+            .change(function () {
+              var str = "";
+              
+              $( "#hap_soportebundle_solicitud_categoria option:selected" ).each(function() {
+                str += $( this ).text() + " ";
+                cambiar($( this ).val());
+              });
+              //alert(str);
+            })
+            .change();
+    
+            function cambiar(str){
+                //var a = str.split("-");
+                var url = ;
+                
+                $.post(url,{
+                        nombre: str//a[0]
+                    },function(data){
+                        if(data.responseCode==200 ||     data.responseCode==400 ){
+                            //$('#dina').html(data.datos);
+                            $('#hap_soportebundle_solicitud_cantidad').html(data.datos);
+                        }else{
+                            alert('Ha ocurrido un error');
+                        }
+                    }
+
+                );
+            }
+            */
+        });
+    </script>
+{% endblock %}

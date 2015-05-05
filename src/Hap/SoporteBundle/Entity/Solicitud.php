@@ -1,0 +1,360 @@
+<?php
+
+namespace Hap\SoporteBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+
+/**
+ * Solicitud
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Solicitud
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad", type="integer")
+     */
+    private $cantidad;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio", type="date")
+     */
+    private $fechaInicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_entrega", type="date")
+     */
+    private $fechaEntrega;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_solicitud", type="date")
+     */
+    private $fechaSolicitud;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="text")
+     */
+    private $comentario;
+
+    /**
+     * Indica si fue asignado o no el producto
+     * 1=Por asignar
+     * 2=Asignado
+     * 3=Negada
+     * 
+     * @var integer
+     *
+     * @ORM\Column(name="estatus", type="integer")
+     */
+    private $estatus;
+
+    /**
+     * Donde van a llevar el producto
+     * 1=Interno
+     * 2=Externo
+     * 
+     * @var integer
+     *
+     * @ORM\Column(name="destino", type="smallint")
+     */
+    private $destino;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_tecnico", type="integer")
+     */
+    private $idTecnico;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="solicitud")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     */
+    protected $categoria;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Hap\UsuarioBundle\Entity\User", inversedBy="solicitud")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     */
+    private $usuarioSolicito;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set cantidad
+     *
+     * @param integer $cantidad
+     * @return Solicitud
+     */
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidad
+     *
+     * @return integer 
+     */
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     * @return Solicitud
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fechaInicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime 
+     */
+    public function getFechaInicio()
+    {
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaEntrega
+     *
+     * @param \DateTime $fechaEntrega
+     * @return Solicitud
+     */
+    public function setFechaEntrega($fechaEntrega)
+    {
+        $this->fechaEntrega = $fechaEntrega;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaEntrega
+     *
+     * @return \DateTime 
+     */
+    public function getFechaEntrega()
+    {
+        return $this->fechaEntrega;
+    }
+
+    /**
+     * Set fechaSolicitud
+     *
+     * @param \DateTime $fechaSolicitud
+     * @return Solicitud
+     */
+    public function setFechaSolicitud($fechaSolicitud)
+    {
+        $this->fechaSolicitud = $fechaSolicitud;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaSolicitud
+     *
+     * @return \DateTime 
+     */
+    public function getFechaSolicitud()
+    {
+        return $this->fechaSolicitud;
+    }
+    
+    /**
+     * Now we tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setFechaSolicitud(new \DateTime(date('Y-m-d')));
+    }
+
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return Solicitud
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
+
+    /**
+     * Set estatus
+     *
+     * @param integer $estatus
+     * @return Solicitud
+     */
+    public function setEstatus($estatus)
+    {
+        $this->estatus = $estatus;
+
+        return $this;
+    }
+
+    /**
+     * Get estatus
+     *
+     * @return integer 
+     */
+    public function getEstatus()
+    {
+        return $this->estatus;
+    }
+
+    /**
+     * Set destino
+     *
+     * @param integer $destino
+     * @return Solicitud
+     */
+    public function setDestino($destino)
+    {
+        $this->destino = $destino;
+
+        return $this;
+    }
+
+    /**
+     * Get destino
+     *
+     * @return integer 
+     */
+    public function getDestino()
+    {
+        return $this->destino;
+    }
+
+    /**
+     * Set idTecnico
+     *
+     * @param integer $idTecnico
+     * @return Solicitud
+     */
+    public function setIdTecnico($idTecnico)
+    {
+        $this->idTecnico = $idTecnico;
+
+        return $this;
+    }
+
+    /**
+     * Get idTecnico
+     *
+     * @return integer 
+     */
+    public function getIdTecnico()
+    {
+        return $this->idTecnico;
+    }
+
+
+    
+
+    /**
+     * Set categoria
+     *
+     * @param \Hap\SoporteBundle\Entity\Categoria $categoria
+     * @return Solicitud
+     */
+    public function setCategoria(\Hap\SoporteBundle\Entity\Categoria $categoria = null)
+    {
+        $this->categoria = $categoria;
+
+        return $this;
+    }
+
+    /**
+     * Get categoria
+     *
+     * @return \Hap\SoporteBundle\Entity\Categoria 
+     */
+    public function getCategoria()
+    {
+        return $this->categoria;
+    }
+
+    /**
+     * Set usuarioSolicito
+     *
+     * @param \Hap\UsuarioBundle\Entity\User $usuarioSolicito
+     * @return Solicitud
+     */
+    public function setUsuarioSolicito(\Hap\UsuarioBundle\Entity\User $usuarioSolicito = null)
+    {
+        $this->usuarioSolicito = $usuarioSolicito;
+
+        return $this;
+    }
+
+    /**
+     * Get usuarioSolicito
+     *
+     * @return \Hap\UsuarioBundle\Entity\User 
+     */
+    public function getUsuarioSolicito()
+    {
+        return $this->usuarioSolicito;
+    }
+}
