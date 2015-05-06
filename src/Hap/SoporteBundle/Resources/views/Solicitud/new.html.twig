@@ -17,7 +17,14 @@
 <h1>{{ 'Nueva Solicitud'|trans({'%entity%': 'Solicitud'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
 
 <form class="well" action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }} style="width: 700px;">
-    {{ form_widget(form) }}
+    {{ form_row(form.categoria) }}
+    {{ form_row(form.cantidad) }}
+    {{ form_row(form.fechaInicio) }}
+    {{ form_row(form.fechaEntrega) }}
+    {{ form_row(form.comentario) }}
+    {{ form_row(form.destino) }}
+    
+    {{ form_widget(form._token) }}
     <p>
         <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
     </p>
@@ -36,7 +43,30 @@
 {% block javascript %}
     <script type="text/javascript">
         $(document).ready(function(){
-            
+           var $categoria = $('#hap_soportebundle_solicitud_categoria');
+            // When sport gets selected ...
+            $categoria.change(function() {
+              // ... retrieve the corresponding form.
+              var $form = $(this).closest('form');
+              // Simulate form data, but only include the selected sport value.
+              var data = {};
+              data[$categoria.attr('name')] = $categoria.val();
+              // Submit data via AJAX to the form's action path.
+              $.ajax({
+                url : $form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                  // Replace current position field ...
+                  $('#hap_soportebundle_solicitud_cantidad').replaceWith(
+                    // ... with the returned one from the AJAX response.
+                    $(html).find('#hap_soportebundle_solicitud_cantidad')
+                  );
+                  // Position field now displays the appropriate positions.
+                }
+              });
+            });
+            /*
            $( "#hap_soportebundle_solicitud_categoria" )
             .change(function () {
               var str = "";
@@ -50,7 +80,7 @@
     
             function cambiar(str){
                 //var a = str.split("-");
-                var url = "{{ path('producto_getn') }}";
+                var url = "";
                 
                 $.post(url,{
                         nombre: str//a[0]
@@ -65,6 +95,7 @@
 
                 );
             }
+            */
             
         });
     </script>

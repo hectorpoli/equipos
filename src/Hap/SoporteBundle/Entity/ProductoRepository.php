@@ -20,7 +20,7 @@ class ProductoRepository extends EntityRepository
                 . ' where p.estatus=2 and p.estado=1 and '
                 . ' p.categoria = :id')->setParameter('id', $id_categoria)->getResult();
         $a = array();
-        $a['-1']='Selecciona una opción';
+        //$a['-1']='Selecciona una opción';
         if(count($query)> 0){
             for($i=1; $i <= $query[0][1]; $i++)
                 $a[$i] = $i;

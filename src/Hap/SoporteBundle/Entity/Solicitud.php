@@ -99,7 +99,7 @@ class Solicitud
     /**
      * @ORM\ManyToOne(targetEntity="Hap\UsuarioBundle\Entity\User", inversedBy="solicitud")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * @Assert\NotBlank(message="Este campo no puede estar en blanco")
+     * 
      */
     private $usuarioSolicito;
 

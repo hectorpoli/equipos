@@ -125,14 +125,16 @@ class SolicitudController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Solicitud();
-        $form = $this->createForm(new SolicitudType(), $entity);
+        $form = $this->createForm(new SolicitudType($this->getDoctrine()), $entity);
         $form->bind($request);
+        
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
         
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             
-            $user = $this->container->get('security.context')->getToken()->getUser();
-            $entity->setIdUsuarioSolicito($user->getId());
+            $entity->setUsuarioSolicito($user);
             $entity->setEstatus(1);
             $entity->setFechaSolicitud(new \DateTime('now'));
             $entity->setIdTecnico(0);
@@ -159,7 +161,7 @@ class SolicitudController extends Controller
     public function newAction()
     {
         $entity = new Solicitud();
-        $form   = $this->createForm(new SolicitudType(), $entity);
+        $form   = $this->createForm(new SolicitudType($this->getDoctrine()), $entity);
 
         return array(
             'entity' => $entity,
@@ -209,7 +211,7 @@ class SolicitudController extends Controller
             throw $this->createNotFoundException('Unable to find Solicitud entity.');
         }
 
-        $editForm = $this->createForm(new SolicitudType(), $entity);
+        $editForm = $this->createForm(new SolicitudType($this->getDoctrine()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -219,6 +221,45 @@ class SolicitudController extends Controller
         );
     }
 
+    /**
+     * Edits an existing Solicitud entity.
+     *
+     * @Route("/{id}", name="solicitud_ajax")
+     * @Method("POST")
+     * @Template("HapSoporteBundle:Solicitud:edit.html.twig")
+     */
+    public function ajaxAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('HapSoporteBundle:Solicitud')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Solicitud entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new SolicitudType($this->getDoctrine()), $entity);
+        $editForm->bind($request);
+
+        
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
+
+            return $this->redirect($this->generateUrl('solicitud_edit', array('id' => $id)));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+    
     /**
      * Edits an existing Solicitud entity.
      *
@@ -237,7 +278,7 @@ class SolicitudController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new SolicitudType(), $entity);
+        $editForm = $this->createForm(new SolicitudType($this->getDoctrine()), $entity);
         $editForm->bind($request);
 
         
