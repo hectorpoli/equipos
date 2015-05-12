@@ -17,7 +17,7 @@
                     {% if is_granted('ROLE_SOPORTE') %}
                         <li><a href="/categoria">Categorias</a></li>
                         <li><a href="/producto">Productos</a></li>
-                        <li><a href="/solicitud">Solicitud</a></li>
+                        <li><a href="/solicitud">Solicitud<span class="badge"><div id="contador"></div></span></a></li>
                         <!--<li><a href="/inventario">Inventario</a></li>-->
                     {% endif %}
                 </ul>
@@ -34,3 +34,12 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+{% block javascript %}
+    <script type="text/javascript">
+        
+        $(document).ready(function(){
+            
+             
+        });
+    </script>
+{% endblock %}

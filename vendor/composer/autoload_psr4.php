@@ -14,5 +14,6 @@ return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'FR3D\\LdapBundle\\' => array($vendorDir . '/fr3d/ldap-bundle'),
     'FOS\\UserBundle\\' => array($vendorDir . '/friendsofsymfony/user-bundle'),
+    'FOS\\JsRoutingBundle\\' => array($vendorDir . '/friendsofsymfony/jsrouting-bundle'),
     'Doctrine\\Bundle\\DoctrineBundle\\' => array($vendorDir . '/doctrine/doctrine-bundle'),
 );

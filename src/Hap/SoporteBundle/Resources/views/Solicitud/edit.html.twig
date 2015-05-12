@@ -43,8 +43,10 @@
 </div>
 {% endblock %}
 {% block javascript %}
+    {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function(){
+            
             var $categoria = $('#hap_soportebundle_solicitud_categoria');
             // When sport gets selected ...
             $categoria.change(function() {
@@ -68,6 +70,9 @@
                 }
               });
             });
+            
+            
+            
            /*
            $( "#hap_soportebundle_solicitud_categoria" )
             .change(function () {

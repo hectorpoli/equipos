@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
+use Symfony\Component\HttpFoundation\Response;
 
 use Hap\SoporteBundle\Entity\Solicitud;
 use Hap\SoporteBundle\Form\SolicitudType;
@@ -172,7 +173,7 @@ class SolicitudController extends Controller
     /**
      * Finds and displays a Solicitud entity.
      *
-     * @Route("/{id}", name="solicitud_show")
+     * @Route("/ver/{id}", name="solicitud_show")
      * @Method("GET")
      * @Template()
      */
@@ -341,5 +342,30 @@ class SolicitudController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+    
+    /**
+     * 
+     *
+     * @Route("/getnsolicitudes", name="solicitud_n", options={"expose"=true})
+     * @Method("GET")
+     * 
+     */
+    public function getNSolicitudesAction()
+    {
+        $request = $this->get('request');
+        
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery(
+                'Select count(s.id) '
+                . 'from HapSoporteBundle:Solicitud s '
+                . ' where s.estatus=1 ');
+        
+        $solicitud = $query->getResult();
+        
+        $return=array("responseCode"=>200,  "datos"=>$solicitud);
+        $return=json_encode($return);
+        return new Response($return,200,array('Content-Type'=>'application/json'));
+        
     }
 }

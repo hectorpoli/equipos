@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Hap\UsuarioBundle\HapUsuarioBundle(),
             new FR3D\LdapBundle\FR3DLdapBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

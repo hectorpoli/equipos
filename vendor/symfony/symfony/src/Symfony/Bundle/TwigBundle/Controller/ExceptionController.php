@@ -104,7 +104,7 @@ class ExceptionController
         if ($showException && 'html' == $format) {
             $name = 'exception_full';
         }
-        
+
         // For error pages, try to find a template for the specific HTTP status code and format
         if (!$showException) {
             $template = new TemplateReference('TwigBundle', 'Exception', $name.$code, $format, 'twig');
@@ -112,16 +112,7 @@ class ExceptionController
                 return $template;
             }
         }
-        
-        //Agregado por Hector Poli
-        if($code == '403'){
-            $template = new TemplateReference('TwigBundle', 'Exception', $name.$code, $format, 'twig');
-            if ($this->templateExists($template)) {
-                return $template;
-            }
-        }
-        //---------------------------
-        
+
         // try to find a template for the given format
         $template = new TemplateReference('TwigBundle', 'Exception', $name, $format, 'twig');
         if ($this->templateExists($template)) {
@@ -130,7 +121,7 @@ class ExceptionController
 
         // default to a generic HTML exception
         $request->setRequestFormat('html');
-        
+
         return new TemplateReference('TwigBundle', 'Exception', $showException ? 'exception_full' : $name, 'html', 'twig');
     }
 
