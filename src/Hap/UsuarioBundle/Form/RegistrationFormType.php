@@ -14,7 +14,7 @@ class RegistrationFormType extends AbstractType
             ->add('name','text',array('label' => 'Nombre:'))
             ->add('roles', 'choice', array('label' => 'Rol', 'required' => true, 
                            'choices' => array( 'ROLE_ADMIN' => 'ADMINISTRADOR','ROLE_SUPERADMIN' => 'SUPERADMINISTRADOR', 
-                                               'ROLE_USER' => 'USUARIO','ROLE_SOPORTE' => 'SOPORTE','ROLE_DESARROLLO' => 'DESARROLLO'), 'multiple' => true));
+                                               'ROLE_USER' => 'USUARIO','ROLE_ADMIN_SOPORTE' => 'ADMIN SOPORTE','ROLE_SOPORTE' => 'SOPORTE','ROLE_ADMIN_SERVICIO' => 'ADMIN SERVICIO','ROLE_SERVICIO' => 'SERVICIO'), 'multiple' => true));
     }
 
     public function getParent()

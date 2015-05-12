@@ -20,6 +20,9 @@
     {{ form_row(edit_form.fechaEntrega) }}
     {{ form_row(edit_form.comentario) }}
     {{ form_row(edit_form.destino) }}
+    {% if is_granted('ROLE_ADMIN_SOPORTE') %}
+        {{ form_row(edit_form.estatus) }}
+    {% endif %}
     
     {{ form_widget(edit_form._token) }}
     <p>

@@ -284,6 +284,10 @@ class SolicitudController extends Controller
 
         
         if ($editForm->isValid()) {
+            $var = $editForm->get('estatus')->getData();
+            if(is_null($var))
+                $entity->setEstatus(1);
+            
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');

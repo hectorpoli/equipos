@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+setInterval('menu()',10000);
+
 function menu(){
     var url = Routing.generate('solicitud_n');
     

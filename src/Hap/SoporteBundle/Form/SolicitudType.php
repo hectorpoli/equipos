@@ -36,7 +36,7 @@ class SolicitudType extends AbstractType
             ->add('fechaEntrega','date', array('data' => new \DateTime()))
             //->add('fechaSolicitud','date', array('data' => new \DateTime()))
             ->add('comentario',null,array('label' => 'Comentario: ','attr' => array('style' => 'width:400px','placeholder'=> 'Comentario relacionado con la solicitud','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
-            //->add('estatus','choice',array('label' => 'Estatus Solicitud: ','choices'  => array('1' => 'Por Asignar', '2' => 'Asignada', '3' => 'Negada'),'attr' => array('style' => 'width:200px','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
+            ->add('estatus','choice',array('label' => 'Estatus Solicitud: ','choices'  => array('1' => 'Por Asignar', '2' => 'Asignada', '3' => 'Negada'),'attr' => array('style' => 'width:200px','class'=> 'form-control','aria-describedby'=> 'sizing-addon2')))
             ->add('destino','choice',array('choices'  => array('1' => 'Interno', '2' => 'Externo'),'attr' => array('style' => 'width:400px')))
             //->add('idTecnico')
             ;
